@@ -1,4 +1,4 @@
-/*const fetch = require ('node-fetch');
+const fetch = require ('node-fetch');
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -49,30 +49,28 @@ async function WriteInsideJSON() //Write data of the array on a json file
     let html = await data.text();
     let $ = await cheerio.load(html);
 
-    let title = $(".poi_intro-display-title").text().trim();
+    let title = $(".poi_intro-display-title").first().text().trim();
     json.title = title;
 
-//Some bug is happening here, the postcode and the addresses are displayed twice
-
-    let address = $(".thoroughfare").text().trim();
-      if(address == "")
-      {
-        json.address = address;
-      }
 
 
-    let postCode = $(".postal-code").text().trim();
+    let address = $(".thoroughfare").first().text().trim();
+    json.address = address;
+
+
+
+    let postCode = $(".postal-code").first().text().trim();
     json.postCode = postCode;
 
-    fs.appendFile('output.json', JSON.stringify(json)+"\r\n", function(err){
+    fs.appendFile('output_michelin.json', JSON.stringify(json)+"\r\n", function(err){
         console.log('copy in output.json' + ' page: ' +  String(json.title));
       });
   }
 }
 
 ScrapHRef();
-*/
 
+/*
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -124,3 +122,4 @@ for (var i = 1; i<36; i++){
     });
     console.log("Scrapping complete.");
 }
+*/
